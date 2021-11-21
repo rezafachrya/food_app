@@ -1,4 +1,5 @@
-import 'package:moor_flutter/moor_flutter.dart';
+// import 'package:moor_flutter/moor_flutter.dart';
+import 'package:drift/drift.dart';
 
 class Meals extends Table {
   // autoIncrement automatically sets this to be the primary key
@@ -13,7 +14,7 @@ class Meals extends Table {
   // Simple default values are specified as Constants
   // BoolColumn get completed => boolean().withDefault(Constant(false))();
 
-  TextColumn get idMeal => text()();
+  TextColumn get idMeal => text().nullable()();
   TextColumn get strMeal => text().nullable()();
   TextColumn get strDrinkAlternate => text().nullable()();
   TextColumn get strCategory => text().nullable()();

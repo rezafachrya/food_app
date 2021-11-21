@@ -1,9 +1,10 @@
 import 'package:food/data/tables/meals.dart';
-import 'package:moor/moor.dart';
+import 'package:food/data/tables/users.dart';
+import 'package:drift/drift.dart';
 
 part 'database_manager.g.dart';
 
-@UseMoor(tables: [Meals])
+@DriftDatabase(tables: [Users, Meals])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(QueryExecutor e) : super(e);
 
@@ -14,8 +15,6 @@ class AppDatabase extends _$AppDatabase {
   MigrationStrategy get migration {
     return MigrationStrategy(
       onCreate: (Migrator m) {
-        print('onCreate DB!!!');
-        print('m.toString() : ${m.toString()}');
         return m.createAll();
       },
       onUpgrade: (Migrator m, int from, int to) async {},
@@ -27,22 +26,42 @@ class AppDatabase extends _$AppDatabase {
     );
   }
 
-  // Get Meal
-  Future<List<Meal>> getAllMeals() => select(meals).get();
+  // // Get Meal
+  // Future<List<Meal>> getAllMeals() => select(meals).get();
 
-  // Watch Meal
-  Stream<List<Meal>> watchAllMeals() => select(meals).watch();
+  // // Watch Meal
+  // Stream<List<Meal>> watchAllMeals() => select(meals).watch();
 
-  // Add Meal
-  Future insertMeal(Meal meal) => into(meals).insert(meal);
+  // // Add Meal
+  // Future insertMeal(Meal meal) => into(meals).insert(meal);
 
-  // Update Meal
-  Future updateMeal(Meal meal) => update(meals).replace(meal);
+  // // Update Meal
+  // Future updateMeal(Meal meal) => update(meals).replace(meal);
 
-  // Delete Meal
-  Future deleteMeal(Meal meal) => delete(meals).delete(meal);
+  // // Delete Meal
+  // Future deleteMeal(Meal meal) => delete(meals).delete(meal);
 
-  // Search Meal
-  Future<List<Meal>> searchedMealList(String searchString) =>
-      (select(meals)..where((tbl) => tbl.strMeal.contains(searchString))).get();
+  // // Search Meal
+  // Future<List<Meal>> searchedMealList(String searchString) =>
+  //     (select(meals)..where((tbl) => tbl.strMeal.contains(searchString))).get();
+
+  // Get user
+  Future<List<User>> getAllUsers() => select(users).get();
+
+  // Watch user
+  Stream<List<User>> watchAllUsers() => select(users).watch();
+
+  // Add user
+  Future insertUser(User user) => into(users).insert(user);
+
+  // Update user
+  Future updateUser(User user) => update(users).replace(user);
+
+  // Delete user
+  Future deleteUser(User user) => delete(users).delete(user);
+
+  // Search user
+  Future<List<User>> searchedUserList(String searchString) =>
+      (select(users)..where((tbl) => tbl.username.contains(searchString)))
+          .get();
 }

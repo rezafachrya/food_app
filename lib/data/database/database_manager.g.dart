@@ -9,8 +9,210 @@ part of 'database_manager.dart';
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
+class User extends DataClass implements Insertable<User> {
+  final int? id;
+  final String username;
+  final String mail;
+  User({this.id, required this.username, required this.mail});
+  factory User.fromData(Map<String, dynamic> data, {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return User(
+      id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      username: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}username'])!,
+      mail: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}mail'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int?>(id);
+    }
+    map['username'] = Variable<String>(username);
+    map['mail'] = Variable<String>(mail);
+    return map;
+  }
+
+  UsersCompanion toCompanion(bool nullToAbsent) {
+    return UsersCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      username: Value(username),
+      mail: Value(mail),
+    );
+  }
+
+  factory User.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return User(
+      id: serializer.fromJson<int?>(json['id']),
+      username: serializer.fromJson<String>(json['username']),
+      mail: serializer.fromJson<String>(json['mail']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int?>(id),
+      'username': serializer.toJson<String>(username),
+      'mail': serializer.toJson<String>(mail),
+    };
+  }
+
+  User copyWith({int? id, String? username, String? mail}) => User(
+        id: id ?? this.id,
+        username: username ?? this.username,
+        mail: mail ?? this.mail,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('User(')
+          ..write('id: $id, ')
+          ..write('username: $username, ')
+          ..write('mail: $mail')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, username, mail);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is User &&
+          other.id == this.id &&
+          other.username == this.username &&
+          other.mail == this.mail);
+}
+
+class UsersCompanion extends UpdateCompanion<User> {
+  final Value<int?> id;
+  final Value<String> username;
+  final Value<String> mail;
+  const UsersCompanion({
+    this.id = const Value.absent(),
+    this.username = const Value.absent(),
+    this.mail = const Value.absent(),
+  });
+  UsersCompanion.insert({
+    this.id = const Value.absent(),
+    required String username,
+    required String mail,
+  })  : username = Value(username),
+        mail = Value(mail);
+  static Insertable<User> custom({
+    Expression<int?>? id,
+    Expression<String>? username,
+    Expression<String>? mail,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (username != null) 'username': username,
+      if (mail != null) 'mail': mail,
+    });
+  }
+
+  UsersCompanion copyWith(
+      {Value<int?>? id, Value<String>? username, Value<String>? mail}) {
+    return UsersCompanion(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      mail: mail ?? this.mail,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int?>(id.value);
+    }
+    if (username.present) {
+      map['username'] = Variable<String>(username.value);
+    }
+    if (mail.present) {
+      map['mail'] = Variable<String>(mail.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UsersCompanion(')
+          ..write('id: $id, ')
+          ..write('username: $username, ')
+          ..write('mail: $mail')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $UsersTable extends Users with TableInfo<$UsersTable, User> {
+  final GeneratedDatabase _db;
+  final String? _alias;
+  $UsersTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, true,
+      typeName: 'INTEGER',
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _usernameMeta = const VerificationMeta('username');
+  late final GeneratedColumn<String?> username = GeneratedColumn<String?>(
+      'username', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
+  final VerificationMeta _mailMeta = const VerificationMeta('mail');
+  late final GeneratedColumn<String?> mail = GeneratedColumn<String?>(
+      'mail', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, username, mail];
+  @override
+  String get aliasedName => _alias ?? 'users';
+  @override
+  String get actualTableName => 'users';
+  @override
+  VerificationContext validateIntegrity(Insertable<User> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('username')) {
+      context.handle(_usernameMeta,
+          username.isAcceptableOrUnknown(data['username']!, _usernameMeta));
+    } else if (isInserting) {
+      context.missing(_usernameMeta);
+    }
+    if (data.containsKey('mail')) {
+      context.handle(
+          _mailMeta, mail.isAcceptableOrUnknown(data['mail']!, _mailMeta));
+    } else if (isInserting) {
+      context.missing(_mailMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  User map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return User.fromData(data,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $UsersTable createAlias(String alias) {
+    return $UsersTable(_db, alias);
+  }
+}
+
 class Meal extends DataClass implements Insertable<Meal> {
-  final String idMeal;
+  final String? idMeal;
   final String? strMeal;
   final String? strDrinkAlternate;
   final String? strCategory;
@@ -64,7 +266,7 @@ class Meal extends DataClass implements Insertable<Meal> {
   final String? strCreativeCommonsConfirmed;
   final DateTime? dateModified;
   Meal(
-      {required this.idMeal,
+      {this.idMeal,
       this.strMeal,
       this.strDrinkAlternate,
       this.strCategory,
@@ -117,12 +319,11 @@ class Meal extends DataClass implements Insertable<Meal> {
       this.strImageSource,
       this.strCreativeCommonsConfirmed,
       this.dateModified});
-  factory Meal.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
+  factory Meal.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return Meal(
       idMeal: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id_meal'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}id_meal']),
       strMeal: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}str_meal']),
       strDrinkAlternate: const StringType().mapFromDatabaseResponse(
@@ -232,7 +433,9 @@ class Meal extends DataClass implements Insertable<Meal> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id_meal'] = Variable<String>(idMeal);
+    if (!nullToAbsent || idMeal != null) {
+      map['id_meal'] = Variable<String?>(idMeal);
+    }
     if (!nullToAbsent || strMeal != null) {
       map['str_meal'] = Variable<String?>(strMeal);
     }
@@ -395,7 +598,8 @@ class Meal extends DataClass implements Insertable<Meal> {
 
   MealsCompanion toCompanion(bool nullToAbsent) {
     return MealsCompanion(
-      idMeal: Value(idMeal),
+      idMeal:
+          idMeal == null && nullToAbsent ? const Value.absent() : Value(idMeal),
       strMeal: strMeal == null && nullToAbsent
           ? const Value.absent()
           : Value(strMeal),
@@ -558,9 +762,9 @@ class Meal extends DataClass implements Insertable<Meal> {
 
   factory Meal.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return Meal(
-      idMeal: serializer.fromJson<String>(json['idMeal']),
+      idMeal: serializer.fromJson<String?>(json['idMeal']),
       strMeal: serializer.fromJson<String?>(json['strMeal']),
       strDrinkAlternate:
           serializer.fromJson<String?>(json['strDrinkAlternate']),
@@ -619,9 +823,9 @@ class Meal extends DataClass implements Insertable<Meal> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'idMeal': serializer.toJson<String>(idMeal),
+      'idMeal': serializer.toJson<String?>(idMeal),
       'strMeal': serializer.toJson<String?>(strMeal),
       'strDrinkAlternate': serializer.toJson<String?>(strDrinkAlternate),
       'strCategory': serializer.toJson<String?>(strCategory),
@@ -965,7 +1169,7 @@ class Meal extends DataClass implements Insertable<Meal> {
 }
 
 class MealsCompanion extends UpdateCompanion<Meal> {
-  final Value<String> idMeal;
+  final Value<String?> idMeal;
   final Value<String?> strMeal;
   final Value<String?> strDrinkAlternate;
   final Value<String?> strCategory;
@@ -1074,7 +1278,7 @@ class MealsCompanion extends UpdateCompanion<Meal> {
     this.dateModified = const Value.absent(),
   });
   MealsCompanion.insert({
-    required String idMeal,
+    this.idMeal = const Value.absent(),
     this.strMeal = const Value.absent(),
     this.strDrinkAlternate = const Value.absent(),
     this.strCategory = const Value.absent(),
@@ -1127,9 +1331,9 @@ class MealsCompanion extends UpdateCompanion<Meal> {
     this.strImageSource = const Value.absent(),
     this.strCreativeCommonsConfirmed = const Value.absent(),
     this.dateModified = const Value.absent(),
-  }) : idMeal = Value(idMeal);
+  });
   static Insertable<Meal> custom({
-    Expression<String>? idMeal,
+    Expression<String?>? idMeal,
     Expression<String?>? strMeal,
     Expression<String?>? strDrinkAlternate,
     Expression<String?>? strCategory,
@@ -1242,7 +1446,7 @@ class MealsCompanion extends UpdateCompanion<Meal> {
   }
 
   MealsCompanion copyWith(
-      {Value<String>? idMeal,
+      {Value<String?>? idMeal,
       Value<String?>? strMeal,
       Value<String?>? strDrinkAlternate,
       Value<String?>? strCategory,
@@ -1357,7 +1561,7 @@ class MealsCompanion extends UpdateCompanion<Meal> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (idMeal.present) {
-      map['id_meal'] = Variable<String>(idMeal.value);
+      map['id_meal'] = Variable<String?>(idMeal.value);
     }
     if (strMeal.present) {
       map['str_meal'] = Variable<String?>(strMeal.value);
@@ -1586,8 +1790,8 @@ class $MealsTable extends Meals with TableInfo<$MealsTable, Meal> {
   $MealsTable(this._db, [this._alias]);
   final VerificationMeta _idMealMeta = const VerificationMeta('idMeal');
   late final GeneratedColumn<String?> idMeal = GeneratedColumn<String?>(
-      'id_meal', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      'id_meal', aliasedName, true,
+      typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _strMealMeta = const VerificationMeta('strMeal');
   late final GeneratedColumn<String?> strMeal = GeneratedColumn<String?>(
       'str_meal', aliasedName, true,
@@ -1912,8 +2116,6 @@ class $MealsTable extends Meals with TableInfo<$MealsTable, Meal> {
     if (data.containsKey('id_meal')) {
       context.handle(_idMealMeta,
           idMeal.isAcceptableOrUnknown(data['id_meal']!, _idMealMeta));
-    } else if (isInserting) {
-      context.missing(_idMealMeta);
     }
     if (data.containsKey('str_meal')) {
       context.handle(_strMealMeta,
@@ -2227,7 +2429,7 @@ class $MealsTable extends Meals with TableInfo<$MealsTable, Meal> {
   Set<GeneratedColumn> get $primaryKey => {idMeal};
   @override
   Meal map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return Meal.fromData(data, _db,
+    return Meal.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
@@ -2239,9 +2441,10 @@ class $MealsTable extends Meals with TableInfo<$MealsTable, Meal> {
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
+  late final $UsersTable users = $UsersTable(this);
   late final $MealsTable meals = $MealsTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [meals];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [users, meals];
 }
