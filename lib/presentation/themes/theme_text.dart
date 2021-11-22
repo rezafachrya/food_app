@@ -58,29 +58,23 @@ class ThemeText {
 }
 
 extension ThemeTextExtension on TextTheme {
-  TextStyle get royalBlueSubtitle1 => subtitle1!.copyWith(
-        color: AppColor.royalBlue,
+  TextStyle get blackHeadline5 => headline5!.copyWith(
+        color: Colors.black,
         fontWeight: FontWeight.w600,
       );
 
-  TextStyle get greySubtitle1 => subtitle1!.copyWith(
-        color: Colors.grey,
-      );
-
-  TextStyle get violetHeadline6 => headline6!.copyWith(
-        color: AppColor.violet,
-      );
-
-  TextStyle get vulcanBodyText2 => bodyText2!.copyWith(
-        color: AppColor.vulcan,
+  TextStyle get blackSubtitle1 => subtitle1!.copyWith(
+        color: Colors.black,
         fontWeight: FontWeight.w600,
       );
 
   TextStyle get greyCaption => caption!.copyWith(
         color: Colors.grey,
+        fontWeight: FontWeight.w600,
       );
 
-  TextStyle get orangeSubtitle1 => subtitle1!.copyWith(
-        color: Colors.orangeAccent,
+  TextStyle get greySubtitle1 => subtitle1!.copyWith(
+        color: Colors.grey,
+        fontWeight: FontWeight.w600,
       );
 }

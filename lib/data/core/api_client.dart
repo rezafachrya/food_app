@@ -9,7 +9,7 @@ class ApiClient {
     final response = await _client.get(ApiConstants.baseUrl + path);
 
     if (response.statusCode == 200) {
-      return json.decode(response.data);
+      return response.data;
     } else {
       throw Exception('Error');
     }
