@@ -79,6 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           right: Sizes.dimen_24),
                                       child: GestureDetector(
                                           onTap: () {
+                                            Modular.to.navigate(
+                                                RouteList.mealDetail,
+                                                arguments: e);
                                             // Get.to(FoodDetailsPage(
                                             //   transaction: Transaction(
                                             //       food: e,

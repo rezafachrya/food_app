@@ -63,7 +63,17 @@ extension ThemeTextExtension on TextTheme {
         fontWeight: FontWeight.w600,
       );
 
+  TextStyle get blackHeadline6 => headline6!.copyWith(
+        color: Colors.black,
+        fontWeight: FontWeight.w600,
+      );
+
   TextStyle get blackSubtitle1 => subtitle1!.copyWith(
+        color: Colors.black,
+        fontWeight: FontWeight.w600,
+      );
+
+  TextStyle get blackBody2 => bodyText2!.copyWith(
         color: Colors.black,
         fontWeight: FontWeight.w600,
       );
@@ -75,6 +85,11 @@ extension ThemeTextExtension on TextTheme {
 
   TextStyle get greySubtitle1 => subtitle1!.copyWith(
         color: Colors.grey,
+        fontWeight: FontWeight.w600,
+      );
+
+  TextStyle get yellowHeadline6 => headline6!.copyWith(
+        color: Colors.yellow,
         fontWeight: FontWeight.w600,
       );
 }

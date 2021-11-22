@@ -2,66 +2,115 @@
 
 part of 'models.dart';
 
-class MealModel extends MealEntity {
+class MealDetailModel extends MealDetailEntity {
   @override
   final String idMeal;
   @override
   final String? strMeal;
+  @override
   final String? strDrinkAlternate;
   @override
   final String? strCategory;
+  @override
   final String? strArea;
+  @override
   final String? strInstructions;
   @override
   final String? strMealThumb;
+  @override
   final String? strTags;
+  @override
   final String? strYoutube;
+  @override
   final String? strIngredient1;
+  @override
   final String? strIngredient2;
+  @override
   final String? strIngredient3;
+  @override
   final String? strIngredient4;
+  @override
   final String? strIngredient5;
+  @override
   final String? strIngredient6;
+  @override
   final String? strIngredient7;
+  @override
   final String? strIngredient8;
+  @override
   final String? strIngredient9;
+  @override
   final String? strIngredient10;
+  @override
   final String? strIngredient11;
+  @override
   final String? strIngredient12;
+  @override
   final String? strIngredient13;
+  @override
   final String? strIngredient14;
+  @override
   final String? strIngredient15;
+  @override
   final String? strIngredient16;
+  @override
   final String? strIngredient17;
+  @override
   final String? strIngredient18;
+  @override
   final String? strIngredient19;
+  @override
   final String? strIngredient20;
+  @override
   final String? strMeasure1;
+  @override
   final String? strMeasure2;
+  @override
   final String? strMeasure3;
+  @override
   final String? strMeasure4;
+  @override
   final String? strMeasure5;
+  @override
   final String? strMeasure6;
+  @override
   final String? strMeasure7;
+  @override
   final String? strMeasure8;
+  @override
   final String? strMeasure9;
+  @override
   final String? strMeasure10;
+  @override
   final String? strMeasure11;
+  @override
   final String? strMeasure12;
+  @override
   final String? strMeasure13;
+  @override
   final String? strMeasure14;
+  @override
   final String? strMeasure15;
+  @override
   final String? strMeasure16;
+  @override
   final String? strMeasure17;
+  @override
   final String? strMeasure18;
+  @override
   final String? strMeasure19;
+  @override
   final String? strMeasure20;
+  @override
   final String? strSource;
+  @override
   final String? strImageSource;
+  @override
   final String? strCreativeCommonsConfirmed;
+  @override
   final DateTime? dateModified;
 
-  const MealModel({
+  const MealDetailModel({
     required this.idMeal,
     this.strMeal,
     this.strDrinkAlternate,
@@ -116,14 +165,62 @@ class MealModel extends MealEntity {
     this.strCreativeCommonsConfirmed,
     this.dateModified,
   }) : super(
-          idMeal: idMeal,
-          strMeal: strMeal,
-          strCategory: strCategory,
-          strMealThumb: strMealThumb,
-        );
+            idMeal: idMeal,
+            strMeal: strMeal,
+            strDrinkAlternate: strDrinkAlternate,
+            strCategory: strCategory,
+            strArea: strArea,
+            strInstructions: strInstructions,
+            strMealThumb: strMealThumb,
+            strTags: strTags,
+            strYoutube: strYoutube,
+            strIngredient1: strIngredient1,
+            strIngredient2: strIngredient2,
+            strIngredient3: strIngredient3,
+            strIngredient4: strIngredient4,
+            strIngredient5: strIngredient5,
+            strIngredient6: strIngredient6,
+            strIngredient7: strIngredient7,
+            strIngredient8: strIngredient8,
+            strIngredient9: strIngredient9,
+            strIngredient10: strIngredient10,
+            strIngredient11: strIngredient11,
+            strIngredient12: strIngredient12,
+            strIngredient13: strIngredient13,
+            strIngredient14: strIngredient14,
+            strIngredient15: strIngredient15,
+            strIngredient16: strIngredient16,
+            strIngredient17: strIngredient17,
+            strIngredient18: strIngredient18,
+            strIngredient19: strIngredient19,
+            strIngredient20: strIngredient20,
+            strMeasure1: strMeasure1,
+            strMeasure2: strMeasure2,
+            strMeasure3: strMeasure3,
+            strMeasure4: strMeasure4,
+            strMeasure5: strMeasure5,
+            strMeasure6: strMeasure6,
+            strMeasure7: strMeasure7,
+            strMeasure8: strMeasure8,
+            strMeasure9: strMeasure9,
+            strMeasure10: strMeasure10,
+            strMeasure11: strMeasure11,
+            strMeasure12: strMeasure12,
+            strMeasure13: strMeasure13,
+            strMeasure14: strMeasure14,
+            strMeasure15: strMeasure15,
+            strMeasure16: strMeasure16,
+            strMeasure17: strMeasure17,
+            strMeasure18: strMeasure18,
+            strMeasure19: strMeasure19,
+            strMeasure20: strMeasure20,
+            strSource: strSource,
+            strImageSource: strImageSource,
+            strCreativeCommonsConfirmed: strCreativeCommonsConfirmed,
+            dateModified: dateModified);
 
-  factory MealModel.fromJson(Map<String, dynamic> json) {
-    return MealModel(
+  factory MealDetailModel.fromJson(Map<String, dynamic> json) {
+    return MealDetailModel(
       idMeal: json['idMeal'],
       strMeal: json['strMeal']?.trim() ?? '',
       strDrinkAlternate: json['strDrinkAlternate']?.trim() ?? '',

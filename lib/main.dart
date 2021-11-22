@@ -7,6 +7,7 @@ import 'package:food/common/constants/constants.dart';
 import 'package:food/presentation/food_app.dart';
 import 'package:food/presentation/journeys/bottom_nav/bottom_nav_page.dart';
 import 'package:food/presentation/journeys/home/home_page.dart';
+import 'package:food/presentation/journeys/meal_detail/meal_page.dart';
 import 'di/get_it.dart';
 
 void main() async {
@@ -26,6 +27,12 @@ class AppModule extends Module {
         ChildRoute(
           RouteList.initial,
           child: (context, args) => const BottomNavScreen(),
+        ),
+        ChildRoute(
+          RouteList.mealDetail,
+          child: (context, args) => MealScreen(
+            meal: args.data,
+          ),
         ),
       ];
 }

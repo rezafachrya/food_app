@@ -1,18 +1,12 @@
-// ignore_for_file: overridden_fields
+part of 'entities.dart';
 
-part of 'models.dart';
-
-class MealModel extends MealEntity {
-  @override
+class MealDetailEntity extends Equatable {
   final String idMeal;
-  @override
   final String? strMeal;
   final String? strDrinkAlternate;
-  @override
   final String? strCategory;
   final String? strArea;
   final String? strInstructions;
-  @override
   final String? strMealThumb;
   final String? strTags;
   final String? strYoutube;
@@ -61,7 +55,7 @@ class MealModel extends MealEntity {
   final String? strCreativeCommonsConfirmed;
   final DateTime? dateModified;
 
-  const MealModel({
+  const MealDetailEntity({
     required this.idMeal,
     this.strMeal,
     this.strDrinkAlternate,
@@ -115,73 +109,7 @@ class MealModel extends MealEntity {
     this.strImageSource,
     this.strCreativeCommonsConfirmed,
     this.dateModified,
-  }) : super(
-          idMeal: idMeal,
-          strMeal: strMeal,
-          strCategory: strCategory,
-          strMealThumb: strMealThumb,
-        );
-
-  factory MealModel.fromJson(Map<String, dynamic> json) {
-    return MealModel(
-      idMeal: json['idMeal'],
-      strMeal: json['strMeal']?.trim() ?? '',
-      strDrinkAlternate: json['strDrinkAlternate']?.trim() ?? '',
-      strCategory: json['strCategory']?.trim() ?? '',
-      strArea: json['strArea']?.trim() ?? '',
-      strInstructions: json['strInstructions']?.trim() ?? '',
-      strMealThumb: json['strMealThumb']?.trim() ?? '',
-      strTags: json['strTags']?.trim() ?? '',
-      strYoutube: json['strYoutube']?.trim() ?? '',
-      strIngredient1: json['strIngredient1']?.trim() ?? '',
-      strIngredient2: json['strIngredient2']?.trim() ?? '',
-      strIngredient3: json['strIngredient3']?.trim() ?? '',
-      strIngredient4: json['strIngredient4']?.trim() ?? '',
-      strIngredient5: json['strIngredient5']?.trim() ?? '',
-      strIngredient6: json['strIngredient6']?.trim() ?? '',
-      strIngredient7: json['strIngredient7']?.trim() ?? '',
-      strIngredient8: json['strIngredient8']?.trim() ?? '',
-      strIngredient9: json['strIngredient9']?.trim() ?? '',
-      strIngredient10: json['strIngredient10']?.trim() ?? '',
-      strIngredient11: json['strIngredient11']?.trim() ?? '',
-      strIngredient12: json['strIngredient12']?.trim() ?? '',
-      strIngredient13: json['strIngredient13']?.trim() ?? '',
-      strIngredient14: json['strIngredient14']?.trim() ?? '',
-      strIngredient15: json['strIngredient15']?.trim() ?? '',
-      strIngredient16: json['strIngredient16']?.trim() ?? '',
-      strIngredient17: json['strIngredient17']?.trim() ?? '',
-      strIngredient18: json['strIngredient18']?.trim() ?? '',
-      strIngredient19: json['strIngredient19']?.trim() ?? '',
-      strIngredient20: json['strIngredient20']?.trim() ?? '',
-      strMeasure1: json['strMeasure1']?.trim() ?? '',
-      strMeasure2: json['strMeasure2']?.trim() ?? '',
-      strMeasure3: json['strMeasure3']?.trim() ?? '',
-      strMeasure4: json['strMeasure4']?.trim() ?? '',
-      strMeasure5: json['strMeasure5']?.trim() ?? '',
-      strMeasure6: json['strMeasure6']?.trim() ?? '',
-      strMeasure7: json['strMeasure7']?.trim() ?? '',
-      strMeasure8: json['strMeasure8']?.trim() ?? '',
-      strMeasure9: json['strMeasure9']?.trim() ?? '',
-      strMeasure10: json['strMeasure10']?.trim() ?? '',
-      strMeasure11: json['strMeasure11']?.trim() ?? '',
-      strMeasure12: json['strMeasure12']?.trim() ?? '',
-      strMeasure13: json['strMeasure13']?.trim() ?? '',
-      strMeasure14: json['strMeasure14']?.trim() ?? '',
-      strMeasure15: json['strMeasure15']?.trim() ?? '',
-      strMeasure16: json['strMeasure16']?.trim() ?? '',
-      strMeasure17: json['strMeasure17']?.trim() ?? '',
-      strMeasure18: json['strMeasure18']?.trim() ?? '',
-      strMeasure19: json['strMeasure19']?.trim() ?? '',
-      strMeasure20: json['strMeasure20']?.trim() ?? '',
-      strSource: json['strSource']?.trim() ?? '',
-      strImageSource: json['strImageSource']?.trim() ?? '',
-      strCreativeCommonsConfirmed:
-          json['strCreativeCommonsConfirmed']?.trim() ?? '',
-      dateModified: json['dateModified'] == null
-          ? null
-          : DateTime.parse(json["dateModified"]),
-    );
-  }
+  });
 
   Map<String, dynamic> toJson() => {
         'idMeal': idMeal,
@@ -238,4 +166,7 @@ class MealModel extends MealEntity {
         'strCreativeCommonsConfirmed': strCreativeCommonsConfirmed,
         'dateModified': dateModified,
       };
+
+  @override
+  List<Object?> get props => [idMeal];
 }

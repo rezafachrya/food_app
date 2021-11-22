@@ -26,24 +26,29 @@ class AppDatabase extends _$AppDatabase {
     );
   }
 
-  // // Get Meal
-  // Future<List<Meal>> getAllMeals() => select(meals).get();
+  // Get Meal
+  Future<List<Meal>> getAllMeals() => select(meals).get();
 
-  // // Watch Meal
-  // Stream<List<Meal>> watchAllMeals() => select(meals).watch();
+  // Watch Meal
+  Stream<List<Meal>> watchAllMeals() => select(meals).watch();
 
-  // // Add Meal
-  // Future insertMeal(Meal meal) => into(meals).insert(meal);
+  // Add Meal
+  Future insertMeal(Meal meal) => into(meals).insert(meal);
 
-  // // Update Meal
-  // Future updateMeal(Meal meal) => update(meals).replace(meal);
+  // Update Meal
+  Future updateMeal(Meal meal) => update(meals).replace(meal);
 
-  // // Delete Meal
-  // Future deleteMeal(Meal meal) => delete(meals).delete(meal);
+  // Delete Meal
+  Future deleteMeal(Meal meal) => delete(meals).delete(meal);
 
-  // // Search Meal
-  // Future<List<Meal>> searchedMealList(String searchString) =>
-  //     (select(meals)..where((tbl) => tbl.strMeal.contains(searchString))).get();
+  // Search Meals
+  Future<List<Meal>> searchedMealList(String searchString) =>
+      (select(meals)..where((tbl) => tbl.strMeal.contains(searchString))).get();
+
+  // Search Meal
+  Future<Meal?> searchById(String id) {
+    return (select(meals)..where((t) => t.idMeal.equals(id))).getSingleOrNull();
+  }
 
   // Get user
   Future<List<User>> getAllUsers() => select(users).get();
