@@ -3,7 +3,7 @@ part of 'data_sources.dart';
 abstract class MealLocalDataSource {
   Future<void> createFavoriteMeal({required Meal meal});
   Future<bool> checkIfFavoriteMeal({required String idMeal});
-  Future<void> deleteFavoriteMeal({required Meal meal});
+  Future<void> deleteFavoriteMeal({required String idMeal});
   Future<List<Meal>> getFavoriteMeals();
 }
 
@@ -28,8 +28,8 @@ class MealLocalDataSourceImpl extends MealLocalDataSource {
   }
 
   @override
-  Future<void> deleteFavoriteMeal({required Meal meal}) async {
-    await moorSql.deleteMeal(meal);
+  Future<void> deleteFavoriteMeal({required String idMeal}) async {
+    await moorSql.deleteMeal(idMeal);
     return;
   }
 

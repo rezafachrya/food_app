@@ -18,9 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double listItemWidth =
-        MediaQuery.of(context).size.width - 2 * Sizes.dimen_24;
-
     return ListView(
       children: [
         Column(
@@ -65,48 +62,71 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 258,
               width: double.infinity,
               child: BlocBuilder<MealCubit, MealState>(
-                builder: (_, state) => (state is MealLoadedSuccess)
-                    ? ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          Row(
-                            children: state.entities
-                                .map((e) => Padding(
-                                      padding: EdgeInsets.only(
-                                          left: (e == state.entities.first)
-                                              ? Sizes.dimen_24
-                                              : 0,
-                                          right: Sizes.dimen_24),
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            Modular.to.navigate(
-                                                RouteList.mealDetail,
-                                                arguments: e);
-                                            // Get.to(FoodDetailsPage(
-                                            //   transaction: Transaction(
-                                            //       food: e,
-                                            //       user: (context
-                                            //               .bloc<UserCubit>()
-                                            //               .state as UserLoaded)
-                                            //           .user),
-                                            //   onBackButtonPressed: () {
-                                            //     Get.back();
-                                            //   },
-                                            // ));
-                                          },
-                                          child: FoodCard(
-                                            meal: e,
-                                          )),
-                                    ))
-                                .toList(),
-                          )
-                        ],
-                      )
-                    : const Center(
-                        child: SpinKitFadingCircle(
-                        size: 45,
-                        color: AppColor.blueChill,
-                      )),
+                builder: (context, state) {
+                  if (state is MealLoadedSuccess) {
+                    return ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Row(
+                          children: state.entities
+                              .map((e) => Padding(
+                                    padding: EdgeInsets.only(
+                                        left: (e == state.entities.first)
+                                            ? Sizes.dimen_24
+                                            : 0,
+                                        right: Sizes.dimen_24),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          Modular.to.navigate(
+                                              RouteList.mealDetail,
+                                              arguments: e);
+                                        },
+                                        child: FoodCard(
+                                          meal: e,
+                                        )),
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    );
+                  } else if (state is MealLoading) {
+                    List<int> tempShimmerList = [1, 2, 3, 4, 5];
+                    return ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Row(
+                          children: tempShimmerList
+                              .map((e) => Padding(
+                                    padding: EdgeInsets.only(
+                                        left: (e == tempShimmerList.first)
+                                            ? Sizes.dimen_24
+                                            : 0,
+                                        right: Sizes.dimen_24),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Modular.to.navigate(
+                                            RouteList.mealDetail,
+                                            arguments: e);
+                                      },
+                                      child: const ShimmerFoodCard(),
+                                    ),
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    );
+                  } else if (state is MealLoadedError) {
+                    return Center(
+                      child: AppErrorWidget(
+                        errorType: state.errorType,
+                        onPressed: () =>
+                            BlocProvider.of<MealCubit>(context).loadMeals(),
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
               ),
             ),
             //// LIST OF FOOD (TABS)

@@ -280,6 +280,7 @@ class MealDetailModel extends MealDetailEntity {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'idMeal': idMeal,
         'strMeal': strMeal,

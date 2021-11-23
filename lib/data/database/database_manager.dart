@@ -19,9 +19,7 @@ class AppDatabase extends _$AppDatabase {
       },
       onUpgrade: (Migrator m, int from, int to) async {},
       beforeOpen: (details) async {
-        if (details.wasCreated) {
-          print('DB was created!!!');
-        }
+        if (details.wasCreated) {}
       },
     );
   }
@@ -39,7 +37,9 @@ class AppDatabase extends _$AppDatabase {
   Future updateMeal(Meal meal) => update(meals).replace(meal);
 
   // Delete Meal
-  Future deleteMeal(Meal meal) => delete(meals).delete(meal);
+  // Future deleteMeal(Meal meal) => delete(meals).delete(meal);
+  Future deleteMeal(String idMeal) =>
+      (delete(meals)..where((t) => t.idMeal.contains(idMeal))).go();
 
   // Search Meals
   Future<List<Meal>> searchedMealList(String searchString) =>

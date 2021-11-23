@@ -24,7 +24,7 @@ class MealDetailCubit extends Cubit<MealDetailState> {
     );
 
     emit(eitherResponse.fold(
-      (l) => MealDetailError(),
+      (l) => MealDetailError(errorType: l.appErrorType),
       (r) => MealDetailLoaded(r),
     ));
 

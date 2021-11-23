@@ -12,11 +12,13 @@ class MealRemoteDataSourceImpls extends MealRemoteDataSource {
 
   @override
   Future<List<MealModel>> getMeals() async {
-    final response = await apiClient.get('search.php?f=a');
+    final response = await apiClient.get('search.php?f=e');
     final respValue = response['meals'];
 
-    List<MealModel> values =
-        (respValue as Iterable).map((e) => MealModel.fromJson(e)).toList();
+    List<MealModel> values = (respValue as Iterable)
+        .map((e) => MealModel.fromJson(e))
+        .take(5)
+        .toList();
 
     return values;
   }

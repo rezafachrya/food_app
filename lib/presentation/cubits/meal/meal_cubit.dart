@@ -19,7 +19,7 @@ class MealCubit extends Cubit<MealState> {
         await getMeals(NoParams());
 
     emit(eitherResponse.fold(
-      (l) => MealLoadedError(message: l.appErrorType.toString()),
+      (l) => MealLoadedError(errorType: l.appErrorType),
       (r) => MealLoadedSuccess(entities: r),
     ));
   }

@@ -31,7 +31,7 @@ class _MealScreenState extends State<MealScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Modular.to.navigate(RouteList.initial);
+        Modular.to.navigate(RouteList.homeScreen);
         return false;
       },
       child: Scaffold(
@@ -69,18 +69,15 @@ class _MealScreenState extends State<MealScreen> {
                           textAlign: TextAlign.justify,
                         ),
                       ),
-                      // Padding(
-                      //   padding:
-                      //       const EdgeInsets.symmetric(horizontal: Sizes.dimen_16),
-                      //   child: Text(
-                      //     TranslationConstants.cast.t(context),
-                      //     style: Theme.of(context).textTheme.headline6,
-                      //   ),
-                      // ),
-                      // CastWidget(),
-                      // VideosWidget(videosCubit: _videosCubit),
                     ],
                   ),
+                );
+              } else if (state is MealDetailError) {
+                return Center(
+                  child: AppErrorWidget(
+                      errorType: state.errorType,
+                      onPressed: () =>
+                          mealDetailCubit.loadMealDetail(widget.meal.idMeal)),
                 );
               } else {
                 return Center(

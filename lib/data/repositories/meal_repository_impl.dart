@@ -42,11 +42,12 @@ class MealRepositoryImpl extends MealRepository {
   }
 
   @override
-  Future<Either<AppError, void>> deleteFavoriteMeal(
-      MealDetailEntity mealDetailEntity) async {
+  Future<Either<AppError, void>> deleteFavoriteMeal(String idMeal) async {
     try {
-      final response = await mealLocalDataSource.deleteFavoriteMeal(
-          meal: Meal.fromJson(mealDetailEntity.toJson()));
+      // final response = await mealLocalDataSource.deleteFavoriteMeal(
+      //     meal: Meal.fromJson(mealDetailEntity.toJson()));
+      final response =
+          await mealLocalDataSource.deleteFavoriteMeal(idMeal: idMeal);
       return Right(response);
     } on Exception {
       return const Left(AppError(AppErrorType.database));
@@ -57,8 +58,10 @@ class MealRepositoryImpl extends MealRepository {
   Future<Either<AppError, List<MealEntity>>> getFavoriteMeals() async {
     try {
       final response = await mealLocalDataSource.getFavoriteMeals();
-      //TODO: Kalau gabisa di for dulu baru dimasukin
-      List<MealModel> values = response.cast<MealModel>();
+      List<MealModel> values = [];
+      for (var element in response) {
+        values.add(MealModel.fromJson(element.toJson()));
+      }
       return Right(values);
     } on Exception {
       return const Left(AppError(AppErrorType.database));

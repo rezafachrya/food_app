@@ -56,7 +56,7 @@ class BigPoster extends StatelessWidget {
                     style: Theme.of(context).textTheme.blackHeadline6,
                   ),
                   Text(meal.strArea ?? '',
-                      style: Theme.of(context).textTheme.greySubtitle1),
+                      style: Theme.of(context).textTheme.subtitle1),
                 ],
               ),
               Text(

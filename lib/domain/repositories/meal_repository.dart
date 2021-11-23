@@ -6,7 +6,6 @@ abstract class MealRepository {
   Future<Either<AppError, void>> saveFavoriteMeal(
       MealDetailEntity mealDetailEntity);
   Future<Either<AppError, List<MealEntity>>> getFavoriteMeals();
-  Future<Either<AppError, void>> deleteFavoriteMeal(
-      MealDetailEntity mealDetailEntity);
+  Future<Either<AppError, void>> deleteFavoriteMeal(String idMeal);
   Future<Either<AppError, bool>> checkIfFavoriteMeal(String mealId);
 }

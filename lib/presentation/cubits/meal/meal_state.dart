@@ -21,10 +21,11 @@ class MealLoadedSuccess extends MealState {
 class MealLoading extends MealState {}
 
 class MealLoadedError extends MealState {
-  final String message;
+  final AppErrorType errorType;
+  // final String message;
 
-  const MealLoadedError({required this.message});
+  const MealLoadedError({required this.errorType});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [errorType];
 }

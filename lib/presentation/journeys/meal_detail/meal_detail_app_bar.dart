@@ -15,7 +15,7 @@ class MealDetailAppBar extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Modular.to.navigate(RouteList.initial);
+            Modular.to.navigate(RouteList.homeScreen);
           },
           child: const Icon(
             Icons.arrow_back_ios,

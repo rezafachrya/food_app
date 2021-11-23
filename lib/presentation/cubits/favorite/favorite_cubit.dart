@@ -22,7 +22,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   void toggleFavoriteMeal(
       MealDetailEntity mealDetailEntity, bool isFavorite) async {
     if (isFavorite) {
-      await deleteFavoriteMeal(mealDetailEntity);
+      await deleteFavoriteMeal(MealParams(idMeal: mealDetailEntity.idMeal));
     } else {
       await saveFavoriteMeal(mealDetailEntity);
     }
@@ -44,8 +44,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     ));
   }
 
-  void delFavoriteMeal(MealDetailEntity mealDetailEntity) async {
-    await deleteFavoriteMeal(mealDetailEntity);
+  void delFavoriteMeal(String idMeal) async {
+    await deleteFavoriteMeal(MealParams(idMeal: idMeal));
     loadFavoriteMeal();
   }
 

@@ -6,8 +6,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:food/common/constants/constants.dart';
 import 'package:food/presentation/food_app.dart';
 import 'package:food/presentation/journeys/bottom_nav/bottom_nav_page.dart';
-import 'package:food/presentation/journeys/home/home_page.dart';
 import 'package:food/presentation/journeys/meal_detail/meal_page.dart';
+import 'package:food/presentation/splash_screen.dart';
 import 'di/get_it.dart';
 
 void main() async {
@@ -26,6 +26,10 @@ class AppModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(
           RouteList.initial,
+          child: (context, args) => const SplashScreen(),
+        ),
+        ChildRoute(
+          RouteList.homeScreen,
           child: (context, args) => const BottomNavScreen(),
         ),
         ChildRoute(
@@ -36,21 +40,3 @@ class AppModule extends Module {
         ),
       ];
 }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primarySwatch: Colors.cyan,
-//       ),
-//       home: Home(),
-//     );
-//   }
-// }
-
-
