@@ -66,11 +66,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 builder: (context, state) {
                   if (state is FavoriteMealsLoaded) {
                     if (state.meals.isEmpty) {
-                      return Center(
-                        child: Text(
-                          'Favorite Food Not Found',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.blackSubtitle1,
+                      return Expanded(
+                        child: Center(
+                          child: Text(
+                            'Favorite Food Not Found',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.blackSubtitle1,
+                          ),
                         ),
                       );
                     }

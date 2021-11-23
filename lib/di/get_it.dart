@@ -5,9 +5,11 @@ import 'package:food/data/database/database.dart';
 import 'package:food/data/repositories/repositories_impls.dart';
 import 'package:food/domain/repositories/repositories.dart';
 import 'package:food/domain/usecases/usecases.dart';
+import 'package:food/presentation/cubits/beef_meal/beef_meal_cubit.dart';
 import 'package:food/presentation/cubits/favorite/favorite_cubit.dart';
 import 'package:food/presentation/cubits/meal/meal_cubit.dart';
 import 'package:food/presentation/cubits/meal_detail/meal_detail_cubit.dart';
+import 'package:food/presentation/cubits/seafood_meal/seafood_meal_cubit.dart';
 // import 'package:food/data/database/database_manager.dart';
 import 'package:get_it/get_it.dart';
 
@@ -55,4 +57,13 @@ Future setupLocator() async {
       getFavoriteMeals: locator(),
       deleteFavoriteMeal: locator(),
       checkIfFavoriteMeal: locator()));
+
+  //Beef Meals
+  locator.registerLazySingleton<GetBeefMeals>(() => GetBeefMeals(locator()));
+  locator.registerFactory(() => BeefMealCubit(getBeefMeals: locator()));
+
+  //Seafood Meals
+  locator
+      .registerLazySingleton<GetSeafoodMeals>(() => GetSeafoodMeals(locator()));
+  locator.registerFactory(() => SeafoodMealCubit(getSeafoodMeals: locator()));
 }

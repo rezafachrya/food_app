@@ -3,6 +3,8 @@ part of 'data_sources.dart';
 abstract class MealRemoteDataSource {
   Future<List<MealModel>> getMeals();
   Future<MealDetailModel> getMeal(String id);
+  Future<List<MealModel>> getBeefMeals();
+  Future<List<MealModel>> getSeafoodMeals();
 }
 
 class MealRemoteDataSourceImpls extends MealRemoteDataSource {
@@ -33,5 +35,31 @@ class MealRemoteDataSourceImpls extends MealRemoteDataSource {
         .toList();
 
     return values.first;
+  }
+
+  @override
+  Future<List<MealModel>> getBeefMeals() async {
+    final response = await apiClient.get('filter.php?c=Beef');
+    final respValue = response['meals'];
+
+    List<MealModel> values = (respValue as Iterable)
+        .map((e) => MealModel.fromJson(e))
+        .take(5)
+        .toList();
+
+    return values;
+  }
+
+  @override
+  Future<List<MealModel>> getSeafoodMeals() async {
+    final response = await apiClient.get('filter.php?c=Seafood');
+    final respValue = response['meals'];
+
+    List<MealModel> values = (respValue as Iterable)
+        .map((e) => MealModel.fromJson(e))
+        .take(5)
+        .toList();
+
+    return values;
   }
 }

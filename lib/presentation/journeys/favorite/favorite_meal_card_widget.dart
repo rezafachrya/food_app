@@ -53,7 +53,7 @@ class FavoriteMealCardWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(Sizes.dimen_12),
                         child: Icon(
                           Icons.delete,
-                          size: Sizes.dimen_24,
+                          size: Sizes.dimen_28,
                           color: Colors.red[400],
                         ),
                       ),

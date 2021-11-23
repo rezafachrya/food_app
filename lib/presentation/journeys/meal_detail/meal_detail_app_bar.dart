@@ -20,7 +20,7 @@ class MealDetailAppBar extends StatelessWidget {
           child: const Icon(
             Icons.arrow_back_ios,
             color: Colors.white,
-            size: Sizes.dimen_24,
+            size: Sizes.dimen_36,
           ),
         ),
         BlocBuilder<FavoriteCubit, FavoriteState>(
@@ -36,14 +36,14 @@ class MealDetailAppBar extends StatelessWidget {
                 child: Icon(
                   state.isMealFavorite ? Icons.favorite : Icons.favorite_border,
                   color: Colors.white,
-                  size: Sizes.dimen_24,
+                  size: Sizes.dimen_36,
                 ),
               );
             } else {
               return const Icon(
                 Icons.favorite_border,
                 color: Colors.white,
-                size: Sizes.dimen_24,
+                size: Sizes.dimen_36,
               );
             }
           },

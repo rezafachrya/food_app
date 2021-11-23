@@ -79,4 +79,28 @@ class MealRepositoryImpl extends MealRepository {
       return const Left(AppError(AppErrorType.database));
     }
   }
+
+  @override
+  Future<Either<AppError, List<MealEntity>>> getBeefMeals() async {
+    try {
+      final values = await mealRemoteDataSource.getBeefMeals();
+      return Right(values);
+    } on SocketException {
+      return const Left(AppError(AppErrorType.network));
+    } on Exception {
+      return const Left(AppError(AppErrorType.api));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<MealEntity>>> getSeafoodMeals() async {
+    try {
+      final values = await mealRemoteDataSource.getSeafoodMeals();
+      return Right(values);
+    } on SocketException {
+      return const Left(AppError(AppErrorType.network));
+    } on Exception {
+      return const Left(AppError(AppErrorType.api));
+    }
+  }
 }

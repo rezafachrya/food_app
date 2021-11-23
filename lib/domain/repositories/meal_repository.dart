@@ -8,4 +8,6 @@ abstract class MealRepository {
   Future<Either<AppError, List<MealEntity>>> getFavoriteMeals();
   Future<Either<AppError, void>> deleteFavoriteMeal(String idMeal);
   Future<Either<AppError, bool>> checkIfFavoriteMeal(String mealId);
+  Future<Either<AppError, List<MealEntity>>> getBeefMeals();
+  Future<Either<AppError, List<MealEntity>>> getSeafoodMeals();
 }

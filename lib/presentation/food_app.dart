@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:food/di/get_it.dart';
+import 'package:food/presentation/cubits/beef_meal/beef_meal_cubit.dart';
 import 'package:food/presentation/cubits/meal/meal_cubit.dart';
+import 'package:food/presentation/cubits/seafood_meal/seafood_meal_cubit.dart';
 import 'package:food/presentation/themes/themes.dart';
 
 class FoodApp extends StatefulWidget {
@@ -15,16 +17,22 @@ class FoodApp extends StatefulWidget {
 
 class _FoodAppState extends State<FoodApp> {
   late MealCubit mealCubit;
+  late BeefMealCubit beefMealCubit;
+  late SeafoodMealCubit seafoodMealCubit;
 
   @override
   void initState() {
     super.initState();
     mealCubit = locator<MealCubit>();
+    beefMealCubit = locator<BeefMealCubit>();
+    seafoodMealCubit = locator<SeafoodMealCubit>();
   }
 
   @override
   void dispose() {
     mealCubit.close();
+    beefMealCubit.close();
+    seafoodMealCubit.close();
     super.dispose();
   }
 
@@ -33,6 +41,8 @@ class _FoodAppState extends State<FoodApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<MealCubit>.value(value: mealCubit),
+        BlocProvider<BeefMealCubit>.value(value: beefMealCubit),
+        BlocProvider<SeafoodMealCubit>.value(value: seafoodMealCubit),
       ],
       child: MaterialApp(
         title: 'Food App',

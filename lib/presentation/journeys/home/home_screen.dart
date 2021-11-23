@@ -12,6 +12,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     BlocProvider.of<MealCubit>(context).loadMeals();
+    BlocProvider.of<BeefMealCubit>(context).loadBeefMeals();
+    BlocProvider.of<SeafoodMealCubit>(context).loadSeafoodMeals();
   }
 
   int selectedIndex = 0;
@@ -21,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListView(
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //// HEADER
             Container(
@@ -129,56 +132,166 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
-            //// LIST OF FOOD (TABS)
-            // Container(
-            //   width: double.infinity,
-            //   color: Colors.white,
-            //   child: Column(
-            //     children: [
-            //       CustomTabBar(
-            //         titles: ['New Taste', 'Popular', 'Recommended'],
-            //         selectedIndex: selectedIndex,
-            //         onTap: (index) {
-            //           setState(() {
-            //             selectedIndex = index;
-            //           });
-            //         },
-            //       ),
-            //       SizedBox(
-            //         height: 16,
-            //       ),
-            //       BlocBuilder<FoodCubit, FoodState>(builder: (_, state) {
-            //         if (state is FoodLoaded) {
-            //           List<Food> foods = state.foods
-            //               .where((element) =>
-            //                   element.types.contains((selectedIndex == 0)
-            //                       ? FoodType.new_food
-            //                       : (selectedIndex == 1)
-            //                           ? FoodType.popular
-            //                           : FoodType.recommended))
-            //               .toList();
-
-            //           return Column(
-            //             children: foods
-            //                 .map((e) => Padding(
-            //                       padding: EdgeInsets.fromLTRB(
-            //                           defaultMargin, 0, defaultMargin, 16),
-            //                       child: FoodListItem(
-            //                           food: e, itemWidth: listItemWidth),
-            //                     ))
-            //                 .toList(),
-            //           );
-            //         } else {
-            //           return Center(
-            //             child: loadingIndicator,
-            //           );
-            //         }
-            //       }),
-            //     ],
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.only(left: Sizes.dimen_24),
+              child: Text(
+                'Beef',
+                style: Theme.of(context).textTheme.blackHeadline6,
+              ),
+            ),
+            SizedBox(
+              height: 258,
+              width: double.infinity,
+              child: BlocBuilder<BeefMealCubit, BeefMealState>(
+                builder: (context, state) {
+                  if (state is BeefMealLoadedSuccess) {
+                    return ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Row(
+                          children: state.entities
+                              .map((e) => Padding(
+                                    padding: EdgeInsets.only(
+                                        left: (e == state.entities.first)
+                                            ? Sizes.dimen_24
+                                            : 0,
+                                        right: Sizes.dimen_24),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          Modular.to.navigate(
+                                              RouteList.mealDetail,
+                                              arguments: e);
+                                        },
+                                        child: FoodCard(
+                                          meal: e,
+                                        )),
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    );
+                  } else if (state is BeefMealLoading) {
+                    List<int> tempShimmerList = [1, 2, 3, 4, 5];
+                    return ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Row(
+                          children: tempShimmerList
+                              .map((e) => Padding(
+                                    padding: EdgeInsets.only(
+                                        left: (e == tempShimmerList.first)
+                                            ? Sizes.dimen_24
+                                            : 0,
+                                        right: Sizes.dimen_24),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Modular.to.navigate(
+                                            RouteList.mealDetail,
+                                            arguments: e);
+                                      },
+                                      child: const ShimmerFoodCard(),
+                                    ),
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    );
+                  } else if (state is BeefMealLoadedError) {
+                    return Center(
+                      child: AppErrorWidget(
+                        errorType: state.errorType,
+                        onPressed: () => BlocProvider.of<BeefMealCubit>(context)
+                            .loadBeefMeals(),
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+            ),
+            //Seafood Meal
+            Padding(
+              padding: const EdgeInsets.only(left: Sizes.dimen_24),
+              child: Text(
+                'Seafood',
+                style: Theme.of(context).textTheme.blackHeadline6,
+              ),
+            ),
+            SizedBox(
+              height: 258,
+              width: double.infinity,
+              child: BlocBuilder<SeafoodMealCubit, SeafoodMealState>(
+                builder: (context, state) {
+                  if (state is SeafoodMealLoadedSuccess) {
+                    return ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Row(
+                          children: state.entities
+                              .map((e) => Padding(
+                                    padding: EdgeInsets.only(
+                                        left: (e == state.entities.first)
+                                            ? Sizes.dimen_24
+                                            : 0,
+                                        right: Sizes.dimen_24),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          Modular.to.navigate(
+                                              RouteList.mealDetail,
+                                              arguments: e);
+                                        },
+                                        child: FoodCard(
+                                          meal: e,
+                                        )),
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    );
+                  } else if (state is SeafoodMealLoading) {
+                    List<int> tempShimmerList = [1, 2, 3, 4, 5];
+                    return ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Row(
+                          children: tempShimmerList
+                              .map((e) => Padding(
+                                    padding: EdgeInsets.only(
+                                        left: (e == tempShimmerList.first)
+                                            ? Sizes.dimen_24
+                                            : 0,
+                                        right: Sizes.dimen_24),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Modular.to.navigate(
+                                            RouteList.mealDetail,
+                                            arguments: e);
+                                      },
+                                      child: const ShimmerFoodCard(),
+                                    ),
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    );
+                  } else if (state is SeafoodMealLoadedError) {
+                    return Center(
+                      child: AppErrorWidget(
+                        errorType: state.errorType,
+                        onPressed: () =>
+                            BlocProvider.of<SeafoodMealCubit>(context)
+                                .loadSeafoodMeals(),
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+            ),
             const SizedBox(
-              height: 80,
+              height: Sizes.dimen_64,
             )
           ],
         )
